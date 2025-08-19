@@ -4,7 +4,10 @@ import { ChatRequest, ChatResponse } from '../../types/chat';
 export async function POST(request: NextRequest) {
   try {
     const body: ChatRequest = await request.json();
-    const { message, conversationHistory } = body;
+    const { message, 
+      // conversationHistory 
+
+    } = body;
 
     if (!message || !message.trim()) {
       return NextResponse.json(
