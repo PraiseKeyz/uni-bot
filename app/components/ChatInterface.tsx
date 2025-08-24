@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Message from './Message';
 import { MessageType } from '../types/chat';
+// import axios from 'axios';
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<MessageType[]>([
@@ -23,6 +24,7 @@ export default function ChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const API_URL = 'https://unibot-model.onrender.com';
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -55,31 +57,41 @@ export default function ChatInterface() {
 
     try {
       // Simulate API call - replace with actual API endpoint
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_URL}/api/search/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: content.trim(),
-          conversationHistory: messages.map(msg => ({
-            role: msg.type === 'user' ? 'user' : 'assistant',
-            content: msg.content
-          }))
+          query: content.trim(),
+          // conversationHistory: messages.map(msg => ({
+          //   role: msg.type === 'user' ? 'user' : 'assistant',
+          //   content: msg.content
+          // }))
         }),
       });
+      
 
       if (!response.ok) {
         throw new Error('Failed to get response');
       }
 
       const data = await response.json();
-      
+      console.log(data);
       // Replace loading message with actual response
+      let messageResponse = "I'm sorry, I couldn't process your request. Please try again.";
+      
+      if (data.success && data.enhancedResponse) {
+        const { detailedAnswer, summary } = data.enhancedResponse;
+      
+        // Use detailedAnswer as the primary response, fallback to summary if detailedAnswer is missing
+        messageResponse = detailedAnswer || summary || messageResponse
+      }
+      
       setMessages(prev => prev.map(msg => 
         msg.isLoading ? {
           ...msg,
-          content: data.response || "I'm sorry, I couldn't process your request. Please try again.",
+          content: messageResponse,
           isLoading: false
         } : msg
       ));

@@ -1,6 +1,7 @@
 'use client';
 
 import { MessageType } from '../types/chat';
+// import formatResponse from '../utils/FormatResponse';
 
 interface MessageProps {
   message: MessageType;
