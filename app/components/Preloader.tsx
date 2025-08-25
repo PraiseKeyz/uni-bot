@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { FiZap } from 'react-icons/fi';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -44,7 +45,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         {/* Logo Animation */}
         <div className="mb-6 md:mb-8 lg:mb-10">
                      <div className="w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-[#2e2e4c] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 animate-pulse">
-            <span className="text-3xl md:text-4xl lg:text-5xl">🎓</span>
+            <svg className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
+            </svg>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 animate-fade-in">
             UniBot

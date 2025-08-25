@@ -1,7 +1,8 @@
 'use client';
 
 import { MessageType } from '../types/chat';
-// import formatResponse from '../utils/FormatResponse';
+import { createFormattedMessage } from '../utils/formatResponse';
+import { FiUser, FiMessageSquare } from 'react-icons/fi';
 
 interface MessageProps {
   message: MessageType;
@@ -16,7 +17,7 @@ export default function Message({ message }: MessageProps) {
     return (
       <div className="flex items-start space-x-2 md:space-x-3 lg:space-x-4">
         <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-[#2e2e4c] rounded-full flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-xs md:text-sm lg:text-base">🤖</span>
+          <FiMessageSquare className="text-white w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5" />
         </div>
         <div className="flex-1">
           <div className="bg-gray-100 rounded-2xl rounded-tl-md px-3 md:px-4 lg:px-5 py-2 md:py-3 lg:py-4 max-w-[280px] md:max-w-md lg:max-w-lg">
@@ -46,21 +47,21 @@ export default function Message({ message }: MessageProps) {
           </div>
         </div>
         <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-[#2e2e4c] rounded-full flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-xs md:text-sm lg:text-base">👤</span>
+          <FiUser className="text-white w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5" />
         </div>
       </div>
     );
   }
 
-  // Bot message
+  // Bot message with formatting
   return (
     <div className="flex items-start space-x-2 md:space-x-3 lg:space-x-4">
       <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-[#2e2e4c] rounded-full flex items-center justify-center flex-shrink-0">
-        <span className="text-white text-xs md:text-sm lg:text-base">🤖</span>
+        <FiMessageSquare className="text-white w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5" />
       </div>
       <div className="flex-1 max-w-[280px] md:max-w-md lg:max-w-lg">
         <div className="bg-gray-100 rounded-2xl rounded-tl-md px-3 md:px-4 lg:px-5 py-2 md:py-3 lg:py-4">
-          <p className="text-sm md:text-base leading-relaxed text-gray-800">{message.content}</p>
+          {createFormattedMessage(message.content)}
         </div>
         <div className="text-xs text-gray-500 mt-1 ml-1">
           {formatTime(message.timestamp)}
